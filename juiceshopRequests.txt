@@ -1,0 +1,66 @@
+https://juice-shop.herokuapp.com/api/SecurityAnswers/
+
+
+POSt
+http://localhost:3000/api/Users/
+{"email":"aaa@aa.com","password":"123456","passwordRepeat":"123456","securityQuestion":{"id":1,"question":"Your eldest siblings middle name?","createdAt":"2026-10-04T17:13:51.165Z","updatedAt":"2026-10-04T17:13:51.165Z"},"securityAnswer":"qaz"}
+
+POSt
+http://127.0.0.1:3000/rest/user/login
+{"email":"ui@abc.com","password":"uiuser"}
+
+POSt
+http://127.0.0.1:3000/api/Addresss/
+{"country":"Canada","fullName":"Raj","mobileNum":1234567899,"zipCode":"123456","streetAddress":"102-abc street","city":"Montreal","state":"QC"}
+
+POSt
+http://127.0.0.1:3000/api/Cards/
+{"fullName":"abc","cardNum":1234567890098765,"expMonth":"4","expYear":"2080"}
+
+GET
+http://127.0.0.1:3000/api/Complaints/
+{
+    "status": "success",
+    "data": [
+        {
+            "UserId": 3,
+            "id": 1,
+            "message": "I'll build my own eCommerce business! With Black Jack! And Hookers!",
+            "file": null,
+            "createdAt": "2026-10-06T00:57:21.223Z",
+            "updatedAt": "2026-10-06T00:57:21.223Z"
+        },
+        {
+            "UserId": 25,
+            "id": 2,
+            "message": "dsdsd",
+            "file": null,
+            "createdAt": "2026-10-06T01:02:14.726Z",
+            "updatedAt": "2026-10-06T01:02:14.726Z"
+        },
+        {
+            "UserId": 25,
+            "id": 3,
+            "message": "sdsdsd",
+            "file": null,
+            "createdAt": "2026-10-06T02:11:49.990Z",
+            "updatedAt": "2026-10-06T02:11:49.990Z"
+        },
+        {
+            "UserId": 25,
+            "id": 4,
+            "message": "What the heck is this ?",
+            "file": null,
+            "createdAt": "2026-10-06T02:12:54.765Z",
+            "updatedAt": "2026-10-06T02:12:54.765Z"
+        },
+        {
+            "UserId": 25,
+            "id": 5,
+            "message": "wtf bro. it's not done",
+            "file": null,
+            "createdAt": "2026-10-06T02:13:21.091Z",
+            "updatedAt": "2026-10-06T02:13:21.091Z"
+        }
+    ]
+}
