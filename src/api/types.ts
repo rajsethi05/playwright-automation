@@ -12,7 +12,7 @@ export interface SecurityQuestion {
 
 /** Envelope used by most `/api/*` and `/rest/*` responses. */
 export interface ApiSuccess<T> {
-  status: 'success';
+  status: "success";
   data: T;
 }
 
@@ -57,4 +57,21 @@ export interface Product {
   price: number;
   deluxePrice: number;
   image: string;
+}
+
+export interface Cards {
+  fullName: string;
+  cardNum: number;
+  expMonth: string;
+  expYear: string;
+}
+
+export interface Address {
+  country: string;
+  fullName: string;
+  mobileNum: number;
+  zipCode: string;
+  streetAddress: string;
+  city: string;
+  state: string;
 }

@@ -30,6 +30,7 @@ export default defineConfig({
     trace: config.artifacts.trace,
     screenshot: config.artifacts.screenshot,
     video: config.artifacts.video,
+    testIdAttribute: 'id'
   },
   projects: [
     /* API tests don't need a browser, so they run once rather than once per browser. */

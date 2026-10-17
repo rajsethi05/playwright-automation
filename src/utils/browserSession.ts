@@ -7,6 +7,7 @@ export async function dismissOverlays(context: BrowserContext): Promise<void> {
   await context.addCookies([
     { name: 'welcomebanner_status', value: 'dismiss', url: config.baseUrl },
     { name: 'cookieconsent_status', value: 'dismiss', url: config.baseUrl },
+    { name: 'language', value: 'en', url: config.baseUrl },
   ]);
 }
 

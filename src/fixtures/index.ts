@@ -1,11 +1,12 @@
-import { test as base, expect, type Page } from '@playwright/test';
-import { JuiceShopApi } from '@api/JuiceShopApi';
-import type { Session, UserDetails } from '@api/types';
-import { config } from '@config';
-import { buildUser } from '@data/userFactory';
-import { LoginPage } from '@pages/LoginPage';
-import { ProductsPage } from '@pages/ProductsPage';
-import { dismissOverlays, injectSession } from '@utils/browserSession';
+import { test as base, expect, type Page } from "@playwright/test";
+import { JuiceShopApi } from "@api/JuiceShopApi";
+import type { Session, UserDetails } from "@api/types";
+import { config } from "@config";
+import { buildUser } from "@data/userFactory";
+import { LoginPage } from "@pages/LoginPage";
+import { ProductsPage } from "@pages/ProductsPage";
+import { dismissOverlays, injectSession } from "@utils/browserSession";
+import { RegistrationPage } from "@pages/RegistrationPage";
 
 type Fixtures = {
   /** API clients without authentication. */
@@ -21,6 +22,7 @@ type Fixtures = {
 
   loginPage: LoginPage;
   productsPage: ProductsPage;
+  registrationPage: RegistrationPage;
 };
 
 /**
@@ -34,7 +36,9 @@ export const test = base.extend<Fixtures>({
   },
 
   api: async ({ playwright }, use) => {
-    const request = await playwright.request.newContext({ baseURL: config.apiUrl });
+    const request = await playwright.request.newContext({
+      baseURL: config.apiUrl,
+    });
     await use(new JuiceShopApi(request));
     await request.dispose();
   },
@@ -69,6 +73,10 @@ export const test = base.extend<Fixtures>({
 
   productsPage: async ({ page }, use) => {
     await use(new ProductsPage(page));
+  },
+
+  registrationPage: async ({ page }, use) => {
+    await use(new RegistrationPage(page));
   },
 });
 

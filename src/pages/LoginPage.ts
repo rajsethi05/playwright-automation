@@ -11,6 +11,7 @@ export class LoginPage extends BasePage {
   readonly emailLabel: Locator;
   readonly passwordLabel: Locator;
   readonly loginButton: Locator;
+  readonly newUserLink: Locator
 
   constructor(page: Page) {
     super(page);
@@ -20,6 +21,7 @@ export class LoginPage extends BasePage {
     this.passwordLabel = page.locator('label[for="password"]');
     // exact: 'Login with Google' would also match.
     this.loginButton = page.getByRole('button', { name: 'Login', exact: true });
+    this.newUserLink = page.getByTestId('newCustomerLink');
   }
 
   async fillEmail(email: string): Promise<void> {
