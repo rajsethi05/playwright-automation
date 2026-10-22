@@ -59,7 +59,7 @@ export interface Product {
   image: string;
 }
 
-export interface Cards {
+export interface Card {
   fullName: string;
   cardNum: number;
   expMonth: string;

@@ -1,18 +1,22 @@
-import { defineConfig, devices, type PlaywrightTestOptions } from '@playwright/test';
-import { config, type BrowserName } from './config/config';
+import {
+  defineConfig,
+  devices,
+  type PlaywrightTestOptions,
+} from "@playwright/test";
+import { config, type BrowserName } from "./config/config";
 
 /**
  * Wires config/config.ts into Playwright. Change values there (or via env vars), not here.
  * See https://playwright.dev/docs/test-configuration.
  */
 const browserDevices: Record<BrowserName, Partial<PlaywrightTestOptions>> = {
-  chromium: devices['Desktop Chrome'],
-  firefox: devices['Desktop Firefox'],
-  webkit: devices['Desktop Safari'],
+  chromium: devices["Desktop Chrome"],
+  firefox: devices["Desktop Firefox"],
+  webkit: devices["Desktop Safari"],
 };
 
 export default defineConfig({
-  testDir: './tests',
+  testDir: "./tests",
   timeout: config.timeouts.test,
   expect: { timeout: config.timeouts.expect },
   fullyParallel: true,
@@ -21,7 +25,7 @@ export default defineConfig({
   retries: config.retries,
   workers: config.workers,
   /* `open: 'never'` keeps a failed run from blocking the terminal; use `npm run report`. */
-  reporter: [['list'], ['html', { open: 'never' }]],
+  reporter: [["list"], ["html", { open: "never" }]],
   use: {
     baseURL: config.baseUrl,
     headless: config.headless,
@@ -30,18 +34,18 @@ export default defineConfig({
     trace: config.artifacts.trace,
     screenshot: config.artifacts.screenshot,
     video: config.artifacts.video,
-    testIdAttribute: 'id'
+    testIdAttribute: "id",
   },
   projects: [
     /* API tests don't need a browser, so they run once rather than once per browser. */
     {
-      name: 'api',
-      testDir: './tests/api-tests',
+      name: "api",
+      testDir: "./tests/api-tests",
       use: { baseURL: config.apiUrl },
     },
-    ...config.browsers.map(browser => ({
+    ...config.browsers.map((browser) => ({
       name: browser,
-      testIgnore: '**/api-tests/**',
+      testIgnore: "**/api-tests/**",
       use: browserDevices[browser],
     })),
   ],
