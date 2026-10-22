@@ -1,7 +1,7 @@
-import type { APIResponse } from '@playwright/test';
-import { endpoints } from '../endpoints';
-import type { Credentials, LoginResponse, Session } from '../types';
-import { BaseApiClient } from './BaseApiClient';
+import type { APIResponse } from "@playwright/test";
+import { endpoints } from "../endpoints";
+import type { Credentials, LoginResponse, Session } from "../types";
+import { BaseApiClient } from "./BaseApiClient";
 
 export class AuthClient extends BaseApiClient {
   login({ email, password }: Credentials): Promise<APIResponse> {
@@ -9,7 +9,13 @@ export class AuthClient extends BaseApiClient {
   }
 
   async createSession(credentials: Credentials): Promise<Session> {
-    const { authentication } = await this.parse<LoginResponse>(await this.login(credentials));
-    return { token: authentication.token, basketId: authentication.bid, email: authentication.umail };
+    const { authentication } = await this.parse<LoginResponse>(
+      await this.login(credentials),
+    );
+    return {
+      token: authentication.token,
+      basketId: authentication.bid,
+      email: authentication.umail,
+    };
   }
 }

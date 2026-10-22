@@ -1,0 +1,2 @@
+# Files in .gitignore are skipped automatically.
+package-lock.json

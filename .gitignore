@@ -10,3 +10,4 @@ node_modules/
 # Local config overrides
 .env
 .DS_Store
+*.png

@@ -1,5 +1,5 @@
-import type { Page } from '@playwright/test';
-import { NavBar } from '@components/NavBar';
+import type { Page } from "@playwright/test";
+import { NavBar } from "@components/NavBar";
 
 export abstract class BasePage {
   /** Route relative to config.baseUrl. Juice Shop uses hash routing, e.g. '/#/login'. */

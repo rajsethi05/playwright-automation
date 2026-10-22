@@ -1,4 +1,4 @@
-import type { APIRequestContext, APIResponse } from '@playwright/test';
+import type { APIRequestContext, APIResponse } from "@playwright/test";
 
 /**
  * Base for all API clients. A client wraps one APIRequestContext; authentication, if any,
@@ -12,7 +12,9 @@ export abstract class BaseApiClient {
 
   protected async parse<T>(response: APIResponse): Promise<T> {
     if (!response.ok()) {
-      throw new Error(`Expected 2xx from ${response.url()}, got ${response.status()}: ${await response.text()}`);
+      throw new Error(
+        `Expected 2xx from ${response.url()}, got ${response.status()}: ${await response.text()}`,
+      );
     }
     return (await response.json()) as T;
   }

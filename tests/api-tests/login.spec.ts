@@ -1,8 +1,11 @@
-import type { LoginResponse } from '@api/types';
-import { expect, test } from '@fixtures';
+import type { LoginResponse } from "@api/types";
+import { expect, test } from "@fixtures";
 
-test.describe('Login API', () => {
-  test('TC12: registered user can log in via the API', async ({ api, newUser }) => {
+test.describe("Login API", () => {
+  test("TC-API-2: registered user can log in via the API", async ({
+    api,
+    newUser,
+  }) => {
     const response = await api.auth.login(newUser);
 
     expect(response.status()).toBe(200);
