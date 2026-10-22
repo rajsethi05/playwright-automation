@@ -110,7 +110,7 @@ export const config = {
   /** Juice Shop REST API. Served by the same app as the front end unless overridden. */
   apiUrl: readString("API_URL", baseUrl),
 
-  /** Browsers that run tests/ui-tests and tests/e2e-tests. API tests never start a browser. */
+  /** Browsers that run tests/ui-tests and tests/e2e-ui-tests. API tests never start a browser. */
   browsers: readBrowsers("BROWSERS", ["chromium"]),
   headless: readBoolean("HEADLESS", true),
 

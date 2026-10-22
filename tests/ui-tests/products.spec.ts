@@ -3,7 +3,7 @@ import type { ApiSuccess, Product } from "@api/types";
 import { expect, test } from "@fixtures";
 
 test.describe("Products page", () => {
-  test("TC8: shows no products when the product API returns an empty list", async ({
+  test("TC-UI-PROD-4: shows no products when the product API returns an empty list", async ({
     page,
     loginPage,
     productsPage,

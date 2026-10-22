@@ -40,12 +40,12 @@ export default defineConfig({
     /* API tests don't need a browser, so they run once rather than once per browser. */
     {
       name: "api",
-      testDir: "./tests/api-tests",
+      testMatch: ["**/api-tests/**/*.spec.ts", "**/e2e-api-tests/**/*.spec.ts"],
       use: { baseURL: config.apiUrl },
     },
     ...config.browsers.map((browser) => ({
       name: browser,
-      testIgnore: "**/api-tests/**",
+      testMatch: ["**/ui-tests/**/*.spec.ts", "**/e2e-ui-tests/**/*.spec.ts"],
       use: browserDevices[browser],
     })),
   ],

@@ -1,7 +1,7 @@
 import { expect, test } from "@fixtures";
 
 test.describe("Login Tests", () => {
-  test("TC1: Verify Registered User can Login through the login form", async ({
+  test("TC-UI-LOGIN-1: Verify Registered User can Login through the login form", async ({
     loginPage,
     productsPage,
     newUser,
