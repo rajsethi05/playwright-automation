@@ -24,8 +24,15 @@ export default defineConfig({
   forbidOnly: config.isCI,
   retries: config.retries,
   workers: config.workers,
-  /* `open: 'never'` keeps a failed run from blocking the terminal; use `npm run report`. */
-  reporter: [["list"], ["html", { open: "never" }]],
+  /*
+   * `open: 'never'` keeps a failed run from blocking the terminal; use `npm run report`.
+   * On CI, `github` also annotates failures on the PR and run summary.
+   */
+  reporter: [
+    ["list"],
+    ...(config.isCI ? [["github"] as const] : []),
+    ["html", { open: "never" }],
+  ],
   use: {
     baseURL: config.baseUrl,
     headless: config.headless,
