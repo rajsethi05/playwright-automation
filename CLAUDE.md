@@ -65,7 +65,11 @@ npm run format                            # Prettier; format:check to verify onl
 - **Formatting:** Prettier (`.prettierrc.json`) enforces double quotes and the code style. `eslint-config-prettier` keeps ESLint out of formatting.
 - **Path aliases** (`tsconfig.json`): `@config`, `@fixtures`, `@api/*`, `@pages/*`, `@components/*`, `@data/*`, `@utils/*`.
 - **TypeScript version:** pinned to `~6.0` because typescript-eslint doesn't support TS 7 yet.
-- **CI:** the working tree comments out `.github/workflows/playwright.yml` (uncommitted), so CI doesn't run.
+- **CI:** `.github/workflows/playwright.yml` runs on pushes and PRs to `main` and on manual dispatch.
+  - Job `quality` runs typecheck, lint and `format:check`. Job `test` runs only if it passes.
+  - `test` starts Juice Shop as a service container (`bkimminich/juice-shop:v20.2.0`) and polls it with curl, because the image has no tools for a Docker health check. It runs `npm test` on Chromium only.
+  - The HTML report and `test-results/` are uploaded as artifacts. On CI the `github` reporter also annotates failures.
+  - `main` is meant to be protected: changes go through PRs and need both checks to pass.
 
 ## Juice Shop notes
 
