@@ -48,11 +48,15 @@ npm run format                            # Prettier; format:check to verify onl
   - `newUser`: a unique user registered via the API.
   - `session`: `newUser` logged in via the API (token and basket id).
   - `authedApi`: API clients authenticated as `newUser`.
-  - `loggedInPage`: the browser logged in as `newUser` without using the login form.
+  - `loggedInPage`: the browser logged in as `newUser` without using the login form. Build page objects on it (`new ProductsPage(loggedInPage)`), so the login is visible in the test and ESLint doesn't flag an unused fixture.
+  - `loginAsNewUser()`: a factory for tests that need several users at once. Each call registers a user and returns `{ page, session }` in a browser context of its own. Contexts made with `browser.newContext()` inside tests inherit the project's `use` options.
   - Each page object also has a fixture. Register new page objects there.
-- **Page objects (`src/pages`):** they extend `BasePage`, which provides the hash-route `path`, `goto()` and `navBar`.
+- **Page objects (`src/pages`):** they extend `BasePage`, which provides the hash-route `path`, `goto()`, `navBar` and `snackBar`.
+  - Parts that belong to one page live in its file as plain classes wrapping a `root` locator, e.g. `ProductCard` and `ProductDetailsDialog` in `ProductsPage.ts`, `BasketItem` in `BasketPage.ts`.
   - Locators are public readonly fields assigned in the constructor.
   - Locator rule: `testIdAttribute` is set to `id` in `playwright.config.ts`, so `getByTestId("x")` matches `id="x"`. Use `getByTestId` whenever the element has a stable id. Otherwise use role-based locators. Angular Material generates ids like `mat-select-0` or `mat-mdc-slide-toggle-0`; those aren't stable.
+  - CSS is the last resort, only for elements with neither an id nor a role/name, and with a comment saying so. Examples: the basket's icon-only buttons (by Font Awesome `data-icon`), the basket badge (`.fa-layers-counter`) and the snack bar (`mat-snack-bar-container`).
+  - Match products by the image's exact alt text, not by text: "Apple Juice" text also matches "Pineapple Juice".
   - Methods are user actions; assertions stay in the specs.
   - If a page isn't usable until data loads, every way onto it waits for that data (see `RegistrationPage.waitForSecurityQuestions`, used by its `goto()` and by `LoginPage.goToRegistration()`).
   - UI shared between pages goes in `src/components`.
@@ -84,7 +88,15 @@ npm run format                            # Prettier; format:check to verify onl
   - Its floating label sits on top of it and intercepts clicks, so it's opened by clicking the label.
   - The password-advice toggle is a `switch`, not a `button`.
   - `abc@abc` counts as a valid email. `abc`, `abc@` and `@abc.com` show "Email address is not valid."; an empty field shows "Please provide an email address."
-- **Products page:** while loading, it looks exactly like an empty list. Assert on the network response, not only on the absence of cards (see TC-UI-PROD-4).
+- **Products page:**
+  - While loading, it looks exactly like an empty list. Assert on the network response, not only on the absence of cards (see TC-UI-PROD-4).
+  - 46 products are seeded. Search is case-insensitive, so "Apple" also finds "Pineapple Juice".
+  - The page sizes depend on the window width: 15/30/45/60 at 1280px (`Desktop Chrome`), default 15. A touch-target overlay intercepts clicks on the items-per-page select, so it's opened with the keyboard.
+  - The details dialog (opened by clicking a card) has only Reviews and Close; "Add to Basket" is on the card.
+  - The message bar's "X" button only gets an accessible role about 150ms after the bar appears, and the bar closes itself after about 4s.
+- **Basket:**
+  - The badge shows the total quantity, not the number of rows. It starts at 0 and only loads with the page, so wait for `GET /rest/basket/<bid>` before asserting "0".
+  - Adding a product that is already in the basket shows "Added another X to basket." instead of "Placed X into basket.".
 - **API auth:** `POST /rest/user/login` returns `token` and `bid` (basket id). The basket endpoints need the `bid`.
 - **Endpoint names:** Juice Shop pluralizes resource names naively. `/api/Addresss` and `/api/Deliverys` are correct, not typos.
 - **Hardcoded values in the PDF:** basket `8` and payment/address `7` in TC-API-E2E-1, and TC-API-1 posts `aaa@aa.com` but expects `raj@aa.com`. Read IDs and emails from API responses.
