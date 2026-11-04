@@ -94,7 +94,6 @@ test.describe("Products page", () => {
       await expect(productsPage.snackBar.message).toContainText(
         basketMessages.addedAnother(appleJuice),
       );
-      
     });
 
     const apple = basketPage.item(appleJuice);
