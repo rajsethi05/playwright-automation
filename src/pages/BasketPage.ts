@@ -44,7 +44,7 @@ export class BasketItem {
     this.decreaseButton = root.locator("button:has([data-icon=minus-square])");
     this.increaseButton = root.locator("button:has([data-icon=plus-square])");
     this.removeButton = root.locator("button:has([data-icon=trash-alt])");
-    this.quantity = root.getByRole("cell").filter({ has: this.increaseButton });
+    this.quantity = root.getByRole("cell").locator("span.cell-initial-font");
   }
 
   async increase(): Promise<void> {

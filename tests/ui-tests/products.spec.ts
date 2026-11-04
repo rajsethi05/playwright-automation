@@ -90,9 +90,11 @@ test.describe("Products page", () => {
 
       await productsPage.productCard(appleJuice).addToBasket();
       await expect(basketCount).toHaveText("3");
+
       await expect(productsPage.snackBar.message).toContainText(
         basketMessages.addedAnother(appleJuice),
       );
+      
     });
 
     const apple = basketPage.item(appleJuice);

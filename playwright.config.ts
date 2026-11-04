@@ -36,6 +36,7 @@ export default defineConfig({
   use: {
     baseURL: config.baseUrl,
     headless: config.headless,
+    launchOptions: { slowMo: config.slowMo },
     actionTimeout: config.timeouts.action,
     navigationTimeout: config.timeouts.navigation,
     trace: config.artifacts.trace,

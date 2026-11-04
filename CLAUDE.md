@@ -25,6 +25,7 @@ npm run test:ui                           # or test:api / test:e2e-ui / test:e2e
 npx playwright test -g "TC-UI-PROD-4:"    # one test by id; keep the colon ("TC-UI-REG-1" would also match TC-UI-REG-10)
 npx playwright test --headed              # or --ui / --debug
 BROWSERS=chromium,firefox,webkit npm test
+SLOW_MO=500 TEST_TIMEOUT=120000 npx playwright test --headed   # watch a run; SLOW_MO stays 0 by default and in CI
 npm run report                            # HTML report (never auto-opens)
 npm run typecheck
 npm run lint                              # lint:fix to autofix
