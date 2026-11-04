@@ -33,6 +33,7 @@ npm run test:e2e-api                      # end-to-end API tests
 npx playwright test -g "TC-UI-PROD-4:"    # one test by id
 npx playwright test --headed              # or --ui / --debug
 BROWSERS=chromium,firefox,webkit npm test # multiple browsers
+SLOW_MO=500 TEST_TIMEOUT=120000 npx playwright test --headed  # watch it: 500ms before each browser action
 npm run report                            # open the HTML report
 ```
 

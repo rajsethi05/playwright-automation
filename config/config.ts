@@ -113,6 +113,11 @@ export const config = {
   /** Browsers that run tests/ui-tests and tests/e2e-ui-tests. API tests never start a browser. */
   browsers: readBrowsers("BROWSERS", ["chromium"]),
   headless: readBoolean("HEADLESS", true),
+  /**
+   * Pause in milliseconds before every browser action, to watch a run (e.g. with --headed).
+   * API calls aren't slowed. It counts towards the test timeout, so raise TEST_TIMEOUT with it.
+   */
+  slowMo: readNumber("SLOW_MO", 200),
 
   /** All values in milliseconds. */
   timeouts: {

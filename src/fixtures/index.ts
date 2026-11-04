@@ -1,8 +1,14 @@
-import { test as base, expect, type Page } from "@playwright/test";
+import {
+  test as base,
+  expect,
+  type BrowserContext,
+  type Page,
+} from "@playwright/test";
 import { JuiceShopApi } from "@api/JuiceShopApi";
 import type { Session, UserDetails } from "@api/types";
 import { config } from "@config";
 import { buildUser } from "@data/userFactory";
+import { BasketPage } from "@pages/BasketPage";
 import { LoginPage } from "@pages/LoginPage";
 import { ProductsPage } from "@pages/ProductsPage";
 import { dismissOverlays, injectSession } from "@utils/browserSession";
@@ -19,7 +25,13 @@ type Fixtures = {
   authedApi: JuiceShopApi;
   /** The default `page`, logged in as `newUser` without going through the login form. */
   loggedInPage: Page;
+  /**
+   * Registers another unique user and returns a page logged in as them, in a browser context
+   * of its own, so several users can be active at once.
+   */
+  loginAsNewUser: () => Promise<{ page: Page; session: Session }>;
 
+  basketPage: BasketPage;
   loginPage: LoginPage;
   productsPage: ProductsPage;
   registrationPage: RegistrationPage;
@@ -65,6 +77,27 @@ export const test = base.extend<Fixtures>({
   loggedInPage: async ({ page, session }, use) => {
     await injectSession(page, session);
     await use(page);
+  },
+
+  // Contexts made here get the project's `use` options (baseURL, viewport, ...) like `context` does.
+  loginAsNewUser: async ({ browser, api }, use) => {
+    const contexts: BrowserContext[] = [];
+    await use(async () => {
+      const user = buildUser();
+      await api.users.create(user);
+      const session = await api.auth.createSession(user);
+      const context = await browser.newContext();
+      contexts.push(context);
+      await dismissOverlays(context);
+      const page = await context.newPage();
+      await injectSession(page, session);
+      return { page, session };
+    });
+    await Promise.all(contexts.map((context) => context.close()));
+  },
+
+  basketPage: async ({ page }, use) => {
+    await use(new BasketPage(page));
   },
 
   loginPage: async ({ page }, use) => {
